@@ -33,7 +33,4 @@ public class OperacoesDAO {
             Logger.getLogger(OperacoesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-    
 }
