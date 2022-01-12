@@ -8,7 +8,7 @@ package com.myproject.poo2finalproject;
  *
  * @author Devoi
  */
-public class CadastroNovo extends javax.swing.JFrame {
+public class AtualizaCadastro extends javax.swing.JFrame {
 
     /**
      * Creates new form CadastroNovo
@@ -20,7 +20,7 @@ public class CadastroNovo extends javax.swing.JFrame {
        choice1.addItem("OUTRO");
     }
     
-    public CadastroNovo() {
+    public AtualizaCadastro() {
         initComponents();
         carregaOpcoes();
     }
@@ -48,11 +48,14 @@ public class CadastroNovo extends javax.swing.JFrame {
         choice1 = new java.awt.Choice();
         cancelaBotao = new javax.swing.JButton();
         salvarBotao = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        codcliTF = new javax.swing.JTextField();
+        buscarBotao = new javax.swing.JButton();
 
         jTextField5.setText("jTextField5");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Novo Cadastro");
+        setTitle("Atualização de Cliente");
         setName("Novo Cadastro"); // NOI18N
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -84,21 +87,32 @@ public class CadastroNovo extends javax.swing.JFrame {
 
         salvarBotao.setText("Salvar");
 
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel6.setText("Código do Cliente:");
+
+        codcliTF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                codcliTFActionPerformed(evt);
+            }
+        });
+
+        buscarBotao.setText("Buscar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel6)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addGap(84, 84, 84)
+                            .addGap(72, 72, 72)
                             .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(jLabel2))))
+                        .addComponent(jLabel2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -117,14 +131,24 @@ public class CadastroNovo extends javax.swing.JFrame {
                     .addComponent(nascTF)
                     .addComponent(enderecoTF)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(codcliTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(buscarBotao)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(codcliTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buscarBotao))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(nomeTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -148,7 +172,7 @@ public class CadastroNovo extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cancelaBotao)
                     .addComponent(salvarBotao))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         pack();
@@ -157,6 +181,10 @@ public class CadastroNovo extends javax.swing.JFrame {
     private void nomeTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nomeTFActionPerformed
+
+    private void codcliTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codcliTFActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_codcliTFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,33 +203,37 @@ public class CadastroNovo extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroNovo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AtualizaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroNovo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AtualizaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroNovo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AtualizaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroNovo.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AtualizaCadastro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroNovo().setVisible(true);
+                new AtualizaCadastro().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buscarBotao;
     private javax.swing.JButton cancelaBotao;
     private java.awt.Choice choice1;
+    private javax.swing.JTextField codcliTF;
     private javax.swing.JTextField enderecoTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField nascTF;
     private javax.swing.JTextField nomeTF;
