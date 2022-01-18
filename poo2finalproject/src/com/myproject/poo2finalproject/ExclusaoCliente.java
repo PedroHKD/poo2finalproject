@@ -4,6 +4,8 @@
  */
 package com.myproject.poo2finalproject;
 
+import com.myproject.poo2finalproject.dao.ClienteDAO;
+
 /**
  *
  * @author Devoi
@@ -51,6 +53,11 @@ public class ExclusaoCliente extends javax.swing.JFrame {
         });
 
         buscarBotao.setText("Excluir");
+        buscarBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBotaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,6 +94,12 @@ public class ExclusaoCliente extends javax.swing.JFrame {
     private void codcliTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codcliTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_codcliTFActionPerformed
+
+    private void buscarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBotaoActionPerformed
+        // TODO add your handling code here:
+        ClienteDAO dao = new ClienteDAO();
+        dao.remover(Integer.parseInt(codcliTF.getText()));
+    }//GEN-LAST:event_buscarBotaoActionPerformed
 
     /**
      * @param args the command line arguments

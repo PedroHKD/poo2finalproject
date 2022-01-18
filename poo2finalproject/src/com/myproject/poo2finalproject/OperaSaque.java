@@ -4,6 +4,10 @@
  */
 package com.myproject.poo2finalproject;
 
+import com.myproject.poo2finalproject.dao.ClienteDAO;
+import com.myproject.poo2finalproject.dao.MovimentacoesDAO;
+import com.myproject.poo2finalproject.model.Cliente;
+
 /**
  *
  * @author Devoi
@@ -43,6 +47,11 @@ public class OperaSaque extends javax.swing.JFrame {
         jLabel2.setText("Valor do depósito:");
 
         opSaqConfBotao.setText("Confirmar");
+        opSaqConfBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opSaqConfBotaoActionPerformed(evt);
+            }
+        });
 
         opSaqCancBotao.setText("Cancelar");
 
@@ -89,6 +98,18 @@ public class OperaSaque extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opSaqConfBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opSaqConfBotaoActionPerformed
+        // TODO add your handling code here:
+                MovimentacoesDAO dao = new MovimentacoesDAO();
+        ClienteDAO clientedao = new ClienteDAO();
+        
+        Cliente cliente = clientedao.buscarPorId(Integer.parseInt(opSaqCodCliTF.getText()));
+        
+        cliente.setSaldo(cliente.getSaldo() - Integer.parseInt(opSaqValor.getText()));
+        
+        dao.saque(cliente, Integer.parseInt(opSaqValor.getText()));
+    }//GEN-LAST:event_opSaqConfBotaoActionPerformed
 
     /**
      * @param args the command line arguments

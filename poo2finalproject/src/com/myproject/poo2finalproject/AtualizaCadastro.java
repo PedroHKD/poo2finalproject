@@ -4,6 +4,14 @@
  */
 package com.myproject.poo2finalproject;
 
+import com.myproject.poo2finalproject.dao.ClienteDAO;
+import com.myproject.poo2finalproject.model.Cliente;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Devoi
@@ -15,9 +23,9 @@ public class AtualizaCadastro extends javax.swing.JFrame {
      */
     public void carregaOpcoes(){
        choice1.addItem("Selecione");
-       choice1.addItem("MASCULINO");
-       choice1.addItem("FEMININO");
-       choice1.addItem("OUTRO");
+       choice1.addItem("M");
+       choice1.addItem("F");
+       choice1.addItem("O");
     }
     
     public AtualizaCadastro() {
@@ -36,13 +44,14 @@ public class AtualizaCadastro extends javax.swing.JFrame {
     private void initComponents() {
 
         jTextField5 = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         nomeTF = new javax.swing.JTextField();
-        nascTF = new javax.swing.JTextField();
         enderecoTF = new javax.swing.JTextField();
         saldoTF = new javax.swing.JTextField();
         choice1 = new java.awt.Choice();
@@ -51,8 +60,13 @@ public class AtualizaCadastro extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         codcliTF = new javax.swing.JTextField();
         buscarBotao = new javax.swing.JButton();
+        nascTF = new javax.swing.JTextField();
 
         jTextField5.setText("jTextField5");
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Atualização de Cliente");
@@ -86,6 +100,11 @@ public class AtualizaCadastro extends javax.swing.JFrame {
         cancelaBotao.setText("Cancelar");
 
         salvarBotao.setText("Salvar");
+        salvarBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarBotaoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Código do Cliente:");
@@ -97,6 +116,11 @@ public class AtualizaCadastro extends javax.swing.JFrame {
         });
 
         buscarBotao.setText("Buscar");
+        buscarBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarBotaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -128,7 +152,6 @@ public class AtualizaCadastro extends javax.swing.JFrame {
                             .addComponent(cancelaBotao)
                             .addComponent(saldoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(nomeTF)
-                    .addComponent(nascTF)
                     .addComponent(enderecoTF)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -136,7 +159,8 @@ public class AtualizaCadastro extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(codcliTF, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(buscarBotao)))
+                                .addComponent(buscarBotao))
+                            .addComponent(nascTF, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -186,6 +210,31 @@ public class AtualizaCadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_codcliTFActionPerformed
 
+    private void salvarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBotaoActionPerformed
+        // TODO add your handling code here:
+        String dateNaoFormatada = nascTF.getText();
+        Date dateNas;
+        try {
+            dateNas = new SimpleDateFormat("yyyy/MM/dd").parse(dateNaoFormatada);
+            Cliente usuario = new Cliente(nomeTF.getText(), enderecoTF.getText(), choice1.getSelectedItem(), dateNas, Double.parseDouble(saldoTF.getText()));
+            
+            ClienteDAO dao = new ClienteDAO();
+            dao.alterar(usuario, Integer.parseInt(codcliTF.getText()));
+        } catch (ParseException ex) {
+            Logger.getLogger(CadastroNovo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_salvarBotaoActionPerformed
+
+    private void buscarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarBotaoActionPerformed
+        // TODO add your handling code here:
+        ClienteDAO dao = new ClienteDAO();
+        Cliente user = dao.buscarPorId(Integer.parseInt(codcliTF.getText()));
+        nomeTF.setText(user.getNome());
+        nascTF.setText(user.getData_nas().toString());
+        enderecoTF.setText(user.getEndereco());
+        saldoTF.setText(Double.toString(user.getSaldo()));
+    }//GEN-LAST:event_buscarBotaoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -234,6 +283,8 @@ public class AtualizaCadastro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField nascTF;
     private javax.swing.JTextField nomeTF;

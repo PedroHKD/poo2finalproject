@@ -4,6 +4,10 @@
  */
 package com.myproject.poo2finalproject;
 
+import com.myproject.poo2finalproject.dao.ClienteDAO;
+import com.myproject.poo2finalproject.dao.MovimentacoesDAO;
+import com.myproject.poo2finalproject.model.Cliente;
+
 /**
  *
  * @author Devoi
@@ -45,6 +49,11 @@ public class OperaTransf extends javax.swing.JFrame {
         jLabel2.setText("Valor do depósito:");
 
         opTransConfBotao.setText("Confirmar");
+        opTransConfBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                opTransConfBotaoActionPerformed(evt);
+            }
+        });
 
         opTransCancBotao.setText("Cancelar");
 
@@ -100,6 +109,22 @@ public class OperaTransf extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void opTransConfBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_opTransConfBotaoActionPerformed
+        // TODO add your handling code here:
+        MovimentacoesDAO dao = new MovimentacoesDAO();
+        ClienteDAO clientedao = new ClienteDAO();
+        
+        Cliente clienteEmissor = clientedao.buscarPorId(Integer.parseInt(opTransCodCliTF1.getText()));
+        Cliente clienteRecebedor = clientedao.buscarPorId(Integer.parseInt(opTranCodCliTF2.getText()));
+
+        
+        clienteEmissor.setSaldo(clienteEmissor.getSaldo() - Integer.parseInt(opTransValor.getText()));
+        clienteRecebedor.setSaldo(clienteRecebedor.getSaldo() + Integer.parseInt(opTransValor.getText()));
+
+       
+        dao.transferencia(clienteEmissor, clienteRecebedor, Integer.parseInt(opTransValor.getText()));
+    }//GEN-LAST:event_opTransConfBotaoActionPerformed
 
     /**
      * @param args the command line arguments

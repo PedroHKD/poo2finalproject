@@ -4,6 +4,14 @@
  */
 package com.myproject.poo2finalproject;
 
+import com.myproject.poo2finalproject.dao.ClienteDAO;
+import com.myproject.poo2finalproject.model.Cliente;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Devoi
@@ -15,9 +23,9 @@ public class CadastroNovo extends javax.swing.JFrame {
      */
     public void carregaOpcoes(){
        choice1.addItem("Selecione");
-       choice1.addItem("MASCULINO");
-       choice1.addItem("FEMININO");
-       choice1.addItem("OUTRO");
+       choice1.addItem("M");
+       choice1.addItem("F");
+       choice1.addItem("O");
     }
     
     public CadastroNovo() {
@@ -42,12 +50,12 @@ public class CadastroNovo extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         nomeTF = new javax.swing.JTextField();
-        nascTF = new javax.swing.JTextField();
         enderecoTF = new javax.swing.JTextField();
         saldoTF = new javax.swing.JTextField();
         choice1 = new java.awt.Choice();
         cancelaBotao = new javax.swing.JButton();
         salvarBotao = new javax.swing.JButton();
+        nascTF = new javax.swing.JFormattedTextField();
 
         jTextField5.setText("jTextField5");
 
@@ -83,6 +91,17 @@ public class CadastroNovo extends javax.swing.JFrame {
         cancelaBotao.setText("Cancelar");
 
         salvarBotao.setText("Salvar");
+        salvarBotao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salvarBotaoActionPerformed(evt);
+            }
+        });
+
+        try {
+            nascTF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -114,10 +133,11 @@ public class CadastroNovo extends javax.swing.JFrame {
                             .addComponent(cancelaBotao)
                             .addComponent(saldoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(nomeTF)
-                    .addComponent(nascTF)
                     .addComponent(enderecoTF)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(choice1, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nascTF, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -157,6 +177,21 @@ public class CadastroNovo extends javax.swing.JFrame {
     private void nomeTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nomeTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nomeTFActionPerformed
+
+    private void salvarBotaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salvarBotaoActionPerformed
+        // TODO add your handling code here:
+        String dateNaoFormatada = nascTF.getText();
+        Date dateNas;
+        try {
+            dateNas = new SimpleDateFormat("dd/MM/yyyy").parse(dateNaoFormatada);
+            Cliente usuario = new Cliente(nomeTF.getText(), enderecoTF.getText(), choice1.getSelectedItem(), dateNas, Double.parseDouble(saldoTF.getText()));
+            
+            ClienteDAO dao = new ClienteDAO();
+            dao.inserir(usuario);
+        } catch (ParseException ex) {
+            Logger.getLogger(CadastroNovo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_salvarBotaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +238,7 @@ public class CadastroNovo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField nascTF;
+    private javax.swing.JFormattedTextField nascTF;
     private javax.swing.JTextField nomeTF;
     private javax.swing.JTextField saldoTF;
     private javax.swing.JButton salvarBotao;

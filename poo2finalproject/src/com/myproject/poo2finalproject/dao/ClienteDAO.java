@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -52,7 +53,7 @@ public class ClienteDAO {
         }
     }
 
-    public boolean alterar(Cliente cliente) {
+    public boolean alterar(Cliente cliente, Integer codCliente) {
         String sql = "UPDATE cliente SET nome=?, endereco=?, sexo=?, data_nas=?, saldo=? WHERE cod_cliente=?";
         try {
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -61,7 +62,7 @@ public class ClienteDAO {
             stmt.setString(3, cliente.getSexo());
             stmt.setDate(4, new java.sql.Date(cliente.getData_nas().getTime()));
             stmt.setDouble(5, cliente.getSaldo());
-            stmt.setInt(6, cliente.getCod_cliente());
+            stmt.setInt(6, codCliente);
             stmt.execute();
             return true;
         } catch (SQLException ex) {
@@ -69,6 +70,57 @@ public class ClienteDAO {
             return false;
         }
     }
+    
+        public Cliente buscarPorId(Integer cod_cliente) {
+        String sql = "Select * from cliente";
+        List<Cliente> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+//            stmt.setInt(1, cod_cliente);
+            ResultSet user = stmt.executeQuery();
+            while(user.next()){
+                Cliente cliente = new Cliente();
+                cliente.setCod_cliente(user.getInt("cod_cliente"));
+                cliente.setData_nas(user.getDate("data_nas"));
+                cliente.setEndereco(user.getString("endereco"));
+                cliente.setNome(user.getString("nome"));
+                cliente.setSaldo(user.getDouble("saldo"));
+                cliente.setSexo(user.getString("sexo"));
+                retorno.add(cliente);
+            }
+            List<Cliente> usuario = retorno.stream().filter(cli -> cli.getCod_cliente() == cod_cliente).collect(Collectors.toList());
+            return usuario.get(0);
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+        
+    public ArrayList<Cliente> ListarTodos() {
+        String sql = "Select * from cliente";
+        ArrayList<Cliente> retorno = new ArrayList<>();
+        try {
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            ResultSet user = stmt.executeQuery();
+            while(user.next()){
+                Cliente cliente = new Cliente();
+                cliente.setCod_cliente(user.getInt("cod_cliente"));
+                cliente.setData_nas(user.getDate("data_nas"));
+                cliente.setEndereco(user.getString("endereco"));
+                cliente.setNome(user.getString("nome"));
+                cliente.setSaldo(user.getDouble("saldo"));
+                cliente.setSexo(user.getString("sexo"));
+                retorno.add(cliente);
+            }
+            
+            return retorno;
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+    }
+        
+        
 
     public boolean remover(Integer cod_cliente) {
         String sql = "DELETE FROM cliente WHERE cod_cliente=?";

@@ -46,7 +46,6 @@ public class Cliente {
         this.cod_cliente = cod_cliente;
     }
     
-    
 
     public String getNome() {
         return nome;
@@ -87,4 +86,10 @@ public class Cliente {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
+    @Override
+    public String toString() {
+        return "Nome: " + nome + ",\nEndereco: " + endereco + ",\nSexo: " + sexo + ",\nData nascimento: " + data_nas + ",\nSaldo: " + saldo;
+    }
+    
 }
